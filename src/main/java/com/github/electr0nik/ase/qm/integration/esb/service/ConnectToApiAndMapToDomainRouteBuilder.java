@@ -23,11 +23,11 @@ public class ConnectToApiAndMapToDomainRouteBuilder extends RouteBuilder {
     from("direct:start") // random start
         .setExchangePattern(ExchangePattern.InOut)
         .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.GET))
-        .dynamicRouter(method(MyDuperDynamicRouter.class, "route"))
+        .recipientList(method(MyDuperDynamicRouter.class, "route"))
 
-        .to("stream:out")
-    //.unmarshal().json(JsonLibrary.Jackson, JsonModel.class
-      ;
+    //    .to("stream:out")
+        .unmarshal().json(JsonLibrary.Jackson, JsonModel.class)
+    ;
 
 
     from("direct:simpleJoke")

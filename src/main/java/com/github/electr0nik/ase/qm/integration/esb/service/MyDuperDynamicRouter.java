@@ -2,6 +2,8 @@ package com.github.electr0nik.ase.qm.integration.esb.service;
 
 import com.github.electr0nik.ase.qm.service.dto.domain.JokeDomain;
 import org.apache.camel.Consume;
+import org.apache.camel.ExchangeProperty;
+import org.apache.camel.Properties;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -16,11 +18,11 @@ public class MyDuperDynamicRouter {
    * @param params
    * @return
    */
-  public String route(JokeDomain params) {
+  public String route(@ExchangeProperty("params") JokeDomain params) {
     StringBuilder sb = new StringBuilder("http4://api.icndb.com/jokes/random/")
-        .append(2)//params.getAmpunt())
-        .append("?firstName=").append("klaus") //params.getFirstName())
-        .append("&lastName=").append("cleber") //params.getLastName())
+        .append(params.getAmount())
+        .append("?firstName=").append(params.getFirstName())
+        .append("&lastName=").append(params.getLastName())
         //.append("limitTo=[").append(StringUtils.join(params.getLimitToList(), ",")).append("]")
         ;
     return sb.toString();

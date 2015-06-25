@@ -20,8 +20,6 @@ public class JokeTO {
   @NotEmpty//(groups = {IAssignNameGroup.class})
   private String lastname;
 
-  private Boolean isBadWordsAllowed;
-
   @NotNull//(groups = {IAssignAmountGroup.class})
   private Long amount;
 
@@ -56,14 +54,6 @@ public class JokeTO {
 
   public void setLastname(String lastname) {
     this.lastname = lastname;
-  }
-
-  public Boolean getIsBadWordsAllowed() {
-    return isBadWordsAllowed;
-  }
-
-  public void setIsBadWordsAllowed(Boolean isBadWordsAllowed) {
-    this.isBadWordsAllowed = isBadWordsAllowed;
   }
 
   public Long getAmount() {

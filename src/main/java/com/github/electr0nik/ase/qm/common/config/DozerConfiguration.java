@@ -29,7 +29,7 @@ public class DozerConfiguration {
             .fields("categoryList", "limitToList", copyByReference())
             .fields("firstname", "firstName")
             .fields("lastname", "lastName")
-            .fields("amount", "ampunt")
+            .fields("amount", "amount")
             .fields("badWordList", "wordList", copyByReference());
       }
     };

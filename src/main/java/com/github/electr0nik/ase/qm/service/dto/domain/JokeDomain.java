@@ -16,7 +16,7 @@ public class JokeDomain {
    */
 
   private final Integer id;
-  private final Long ampunt;
+  private final Long amount;
 
   private final String firstName;
   private final String lastName;
@@ -29,7 +29,7 @@ public class JokeDomain {
 
   public JokeDomain(Builder builder) {
     this.id = builder.id;
-    this.ampunt = builder.amount;
+    this.amount = builder.amount;
     this.firstName = builder.firstName;
     this.lastName = builder.lastName;
     this.limitToList = builder.limitToList;
@@ -41,8 +41,8 @@ public class JokeDomain {
     return id;
   }
 
-  public Long getAmpunt() {
-    return ampunt;
+  public Long getAmount() {
+    return amount;
   }
 
   public String getFirstName() {
@@ -77,41 +77,62 @@ public class JokeDomain {
     private List<String> wordList;
     private String joke;
 
-    public Builder id(Integer id) {
+
+    public Integer getId() {
+      return id;
+    }
+
+    public void setId(Integer id) {
       this.id = id;
-      return this;
     }
 
-    public Builder amount(Long amount) {
+    public Long getAmount() {
+      return amount;
+    }
+
+    public void setAmount(Long amount) {
       this.amount = amount;
-      return this;
     }
 
-    public Builder firstName(String firstName) {
+    public String getFirstName() {
+      return firstName;
+    }
+
+    public void setFirstName(String firstName) {
       this.firstName = firstName;
-      return this;
     }
 
-    public Builder lastName(String lastName) {
+    public String getLastName() {
+      return lastName;
+    }
+
+    public void setLastName(String lastName) {
       this.lastName = lastName;
-      return this;
     }
 
-    public Builder limitToList(List<String> limitToList) {
+    public List<String> getLimitToList() {
+      return limitToList;
+    }
+
+    public void setLimitToList(List<String> limitToList) {
       this.limitToList = limitToList;
-      return this;
     }
 
-    public Builder wordList(List<String> wordList) {
+    public List<String> getWordList() {
+      return wordList;
+    }
+
+    public void setWordList(List<String> wordList) {
       this.wordList = wordList;
-      return this;
     }
 
-    public Builder joke(String joke) {
+    public String getJoke() {
+      return joke;
+    }
+
+    public void setJoke(String joke) {
       this.joke = joke;
-      return this;
     }
-
 
     public JokeDomain create() {
       return new JokeDomain(this);
