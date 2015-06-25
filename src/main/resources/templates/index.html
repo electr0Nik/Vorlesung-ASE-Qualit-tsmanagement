@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Dashboard" th:fragment="page(pageId)" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+  <title>ESBJoke</title>
+
+  <link rel="stylesheet" th:href="@{'/lib/bootstrap/css/bootstrap.css'}"/>
+  <link rel="stylesheet" th:href="@{'/lib/font-awesome/css/font-awesome.css'}"/>
+
+  <script type="text/javascript" th:src="@{'/lib/less/less.js'}"/>
+
+  <script type="text/javascript" th:src="@{'/lib/jquery/jquery.js'}"/>
+  <script type="text/javascript" th:src="@{'/lib/bootstrap/js/bootstrap.js'}"/>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script type="text/javascript" th:src="@{'/lib/html5shiv/html5shiv-printshiv.js'}"/>
+  <script type="text/javascript" th:src="@{'/lib/respond/respond.min.js'}"/>
+  <![endif]-->
+
+  <!--[if gte IE 10]>
+  <script type="text/javascript" th:src="@{'/lib/html5shiv/html5shiv-printshiv.js'}"/>
+  <![endif]-->
+
+  <script type="text/javascript" th:src="@{'/lib/tagsinput/bootstrap-tagsinput.js'}"/>
+  <link rel="stylesheet" th:href="@{'/lib/tagsinput/bootstrap-tagsinput.css'}"/>
+
+  <style type="text/css">
+    .bootstrap-tagsinput {
+      width: 100% !important;
+    }
+  </style>
+
+  <script type="text/javascript" th:src="@{'/js/application.js'}"/>
+</head>
+
+<body th:id="${pageId}">
+<header>
+
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" th:href="@{/}">ESBJoke-Home</a>
+      </div>
+      <div class="collapse navbar-collapse">
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="row">
+    <div class="col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6 col-sm-offset-1 col-sm-7">
+      <div class="panel panel-default">
+
+        <div class="panel-body">
+          <h3>Willkommen zum Joke-Service</h3>
+        </div>
+        <hr/>
+        <div class="panel-body">
+          <div class="alert alert-success" role="alert" th:if="${returnValue != null}">
+            Your joke: <br/>
+            <th:block th:each="joke : ${returnValue}">
+              <p th:text="${joke.joke}"/>
+            </th:block>
+          </div>
+        </div>
+        <hr/>
+        <form th:action="@{/simplejoke}" method="post">
+          <div class="panel-body">
+            <h4>Klicke einfach auf den folgenden Button für einen simplen Witz:</h4>
+
+            <button type="submit" class="btn btn-primary">Get simple Joke</button>
+          </div>
+        </form>
+        <hr/>
+        <form th:action="@{/joke}" method="post" th:object="${jokeModel}">
+          <div class="panel-body">
+            <h4>Extended - Tipp zur Verwendung:</h4>
+
+            <p>
+              Drücken Sie einfach auf Submit um einen zufälligen Witz zu erhalten.<br/>
+              Möchten Sie einen Witz mit einem bestimmten Name, füllen Sie Vor- und Nachname aus.<br/>
+              Wollen Sie mehrere Witze auf einmal, geben Sie einfach die Anzahl an.<br/>
+              Wenn Sie die Witze auf eine bestimmte Kategorie filtern wollen, wählen Sie einfach die entsprechenden
+              Boxen aus<br/>
+              Zusätzlich besteht noch die Möglichkeit, BadWords anzugeben, die dann ebenfalls die Witze filtern.
+            </p>
+
+            <div class="form-group">
+              <label for="firstname">Firstname</label>
+              <input type="text" class="form-control" name="firstname" id="firstname"
+                     placeholder="Enter your Firstname"
+                     th:errorclass="'alert alert-warning'"/>
+
+              <p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" class="alert alert-warning">
+                firstname</p>
+            </div>
+            <div class="form-group">
+              <label for="lastname">Lastname</label>
+              <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Enter your Lastname"
+                     th:errorclass="'alert alert-warning'"/>
+
+              <p th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" class="alert alert-warning">
+                lastname</p>
+            </div>
+            <div class="form-group">
+              <label for="amount">Amount</label>
+              <input type="text" class="form-control" name="amount" id="amount"
+                     placeholder="Enter how many jokes you want" th:errorclass="'alert alert-warning'"/>
+
+              <p th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" class="alert alert-warning">
+                amount</p>
+            </div>
+            <div class="form-group">
+              <label for="categoryList">Kategorien</label>
+
+              <div class="checkbox">
+                <label th:each="cat, counter : ${jokeModel.categoryList}" class="checkbox"
+                       th:for="${counter.count}">
+                  <input type="checkbox" th:id="${counter.count}" name="categoryList" th:value="${cat}"
+                         th:text="${cat}"/>
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="badWordList">Bad World List</label>
+              <textarea type="text" class="form-control" name="badWordList" id="badWordList"
+                        placeholder="Enter Bad words which should be filtered!"/>
+            </div>
+            <div class="form-group">
+              <label for="isBadWordsAllowed">Are bad words allowed?</label>
+
+              <div class="checkbox">
+                <label for="isBadWordsAllowed" class="checkbox">
+                  <input type="checkbox" class="checkbox" id="isBadWordsAllowed" name="isBadWordsAllowed"/>hint: only
+                  yes if checked
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <button type="submit" class="btn btn-primary">Get extended Joke</button>
+            <button type="reset" class="btn btn-secondary">Reset fields</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</main>
+<footer>
+</footer>
+</body>
+</html>
